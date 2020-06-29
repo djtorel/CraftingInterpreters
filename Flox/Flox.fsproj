@@ -9,8 +9,12 @@
         <Compile Include="CommonLibrary.fs" />
         <Compile Include="DomainTypes.fs" />
         <Compile Include="ErrorTypes.fs" />
+        <Compile Include="ErrorSystem.fs" />
+        <Compile Include="Location.fs" />
         <Compile Include="Token.fs" />
         <Compile Include="Scanner.fs" />
+        <Compile Include="Script.fs" />
+        <Compile Include="Repl.fs" />
         <Compile Include="Program.fs" />
     </ItemGroup>
 
