@@ -1,17 +1,15 @@
 namespace Flox.ErrorTypes
 
+open Flox
+
 type RuntimeError =
     { Message: string
       Code: int }
 
 type ScanError =
-    { Line: int
-      Where: string
+    { Location : Location.Location
       Message: string }
 
 type RuntimeErrorType =
     | InvalidInput
     | UnknownError
-
-type ScanErrorType =
-    | Foo

@@ -15,13 +15,9 @@ let handleResult result =
         e.Code |> printfn "Code: %d"
         e.Code
 
-let scanError line where message =
-    { Line = line
-      Where = where
-      Message = message }
-
-let reportScanError scanError =
-    printfn "[line %d] Error%s: %s" scanError.Line scanError.Where scanError.Message
+let scanError error location c =
+    { Location = location
+      Message = sprintf "[line %i, col, %i] %s: %c" location.Line location.Column error c }
 
 let handleScanResult result =
     match result with
