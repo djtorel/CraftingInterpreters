@@ -1,4 +1,5 @@
 module Flox.Scanner
+open System
 
 open Flox.Token.TokenTypes
 open Flox.CommonLibrary
@@ -20,6 +21,9 @@ let rec scanline location tokens currentChar =
 
     let moveToNextLine () =
         scanline location tokens []
+
+    let skipColumn tail =
+        scanline (nextColumn location) tokens tail
 
     match currentChar with
     | [] -> tokens |> Result.map List.rev |> Result.mapError List.rev
@@ -43,6 +47,8 @@ let rec scanline location tokens currentChar =
     | '>' :: tl -> mapResultAndMove (Ok GREATER) tl
     | '/' :: '/' :: _ -> moveToNextLine ()
     | '/' :: tl -> mapResultAndMove (Ok SLASH) tl
+    | '\n' :: _ -> moveToNextLine ()
+    | c :: tl when c |> Char.IsWhiteSpace -> skipColumn tl
     | c :: tl -> mapResultAndMove (Error ("Unknown character", c)) tl
 
 
