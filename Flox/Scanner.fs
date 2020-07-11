@@ -22,7 +22,7 @@ let rec scanline location tokens currentChar =
         scanline location tokens []
 
     match currentChar with
-    | [] -> tokens |> Result.map Seq.rev |> Result.mapError Seq.rev
+    | [] -> tokens |> Result.map List.rev |> Result.mapError List.rev
     | '(' :: tl -> mapResultAndMove (Ok LEFT_PAREN) tl
     | ')' :: tl -> mapResultAndMove (Ok RIGHT_PAREN) tl
     | '{' :: tl -> mapResultAndMove (Ok LEFT_BRACE) tl
@@ -54,7 +54,7 @@ We need to scan each line character by character
 Can use Seq.mapi to keep track of line number and to iterate over lines
 Use recursive function to scan each line...
 *)
-let run (source : string seq) =
+let run (source) =
     source
     |> Seq.mapi(fun iter str ->
         str
