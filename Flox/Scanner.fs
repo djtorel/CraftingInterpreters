@@ -18,8 +18,11 @@ let rec scanline location tokens currentChar =
         | Ok t -> scanline (nextColumn location) (mapTokenResult t location tokens)
         | Error (e, c) -> scanline (nextColumn location) (mapErrorResult e c location tokens)
 
+    let moveToNextLine () =
+        scanline location tokens []
+
     match currentChar with
-    | [] -> tokens |> Result.map List.rev |> Result.mapError List.rev
+    | [] -> tokens |> Result.map Seq.rev |> Result.mapError Seq.rev
     | '(' :: tl -> mapResultAndMove (Ok LEFT_PAREN) tl
     | ')' :: tl -> mapResultAndMove (Ok RIGHT_PAREN) tl
     | '{' :: tl -> mapResultAndMove (Ok LEFT_BRACE) tl
@@ -38,6 +41,8 @@ let rec scanline location tokens currentChar =
     | '<' :: tl -> mapResultAndMove (Ok LESS) tl
     | '>' :: '=' :: tl -> mapResultAndMove (Ok GREATER_EQUAL) tl
     | '>' :: tl -> mapResultAndMove (Ok GREATER) tl
+    | '/' :: '/' :: _ -> moveToNextLine ()
+    | '/' :: tl -> mapResultAndMove (Ok SLASH) tl
     | c :: tl -> mapResultAndMove (Error ("Unknown character", c)) tl
 
 
