@@ -4,7 +4,7 @@ open System.IO
 
 let runFile path =
     path
-    |> File.ReadLines
+    |> File.ReadAllText
     |> Scanner.run
     |> ignore
     Ok 0

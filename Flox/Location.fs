@@ -9,11 +9,11 @@ let incrementColumnBy location increment =
 
 let nextLine location =
     { Line = location.Line + 1
-      Column = 0 }
+      Column = 1 }
 
 let nextColumn location =
     { location with Column = location.Column + 1 }
 
 let start () =
-    { Line = 0
-      Column = 0 }
+    { Line = 1
+      Column = 1 }

@@ -8,13 +8,14 @@ let runPrompt() =
     let rec prompt buffer =
         printf "> "
         match Console.ReadLine() with
-        | "quit;" | null -> []
+        | "quit;" | null -> ()
         | line ->
-            buffer @ [line]
+            buffer + line
             |> Scanner.run
-            |> List.ofSeq
+            |> (fun src -> src + "\n")
             |> prompt
-    match prompt [] with
-    | [] -> Ok 0
-    | _ ->
-        ErrorSystem.runtimeError UnknownError
+
+    match prompt String.Empty with
+    | () -> Ok 0
+    (*| _ ->
+        ErrorSystem.runtimeError UnknownError*)
